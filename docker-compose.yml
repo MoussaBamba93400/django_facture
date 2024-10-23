@@ -1,0 +1,31 @@
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+  pgadmin: {}  # Added definition for pgadmin volume
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_SERVICE=localhost
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=demo
+      - POSTGRES_USER=xxxxxxx
+      - POSTGRES_PASSWORD=xxxxxxxxxxxx
+    ports:
+      - '5432:5432'
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - '15432:80'
+    volumes:
+      - pgadmin:/var/lib/pgadmin  # Correctly references pgadmin volume
+    depends_on:
+      - postgres
