@@ -1,0 +1,32 @@
+# Environnement virtuel
+venv/
+env/
+.venv/
+
+# Fichiers de configuration IDE
+*.pyc
+*.pyo
+__pycache__/
+*.pdb
+*.sqlite3
+
+# Fichiers de sécurité
+*.env
+
+# Répertoires de migrations
+*/migrations/*
+
+# Fichiers de test
+coverage/
+*.cover
+
+# Fichiers de log
+*.log
+
+# D'autres fichiers ou répertoires à ignorer
+.DS_Store
+Thumbs.db
+
+venv/
+env/
+.venv/

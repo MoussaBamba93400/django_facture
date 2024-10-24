@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>List of Factures</title>
+  </head>
+  <body>
+    {% extends 'factures/base.html' %} 
+    {% block content %}
+
+    <h1>Liste des Factures</h1>
+
+    <!-- Formulaire de filtrage -->
+    <form method="GET">
+      <label for="client_id">Client:</label>
+      <select name="client_id" id="client_id">
+        <option value="">Tous les clients</option>
+        {% for client in clients %}
+          <option value="{{ client.id }}" {% if request.GET.client_id == client.id|stringformat:"s" %}selected{% endif %}>
+            {{ client.nom }}
+          </option>
+        {% endfor %}
+      </select>
+
+      <label for="categorie_id">Categorie:</label>
+      <select name="categorie_id" id="categorie_id">
+        <option value="">Toute les catégories</option>
+        {% for categorie in categories %}
+          <option value="{{ categorie.id }}" >
+            {{ categorie.nom }}
+          </option>
+        {% endfor %}
+      </select>
+
+      <label for="min_montant">Montant min:</label>
+      <input type="number" step="0.01" name="min_montant" value="{{ request.GET.min_montant }}">
+
+      <label for="max_montant">Montant max:</label>
+      <input type="number" step="0.01" name="max_montant" value="{{ request.GET.max_montant }}">
+
+      <button type="submit">Filtrer</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Description</th>
+          <th>Amount</th>
+          <th>Client</th>
+          <th>Category</th>
+          <th>Paid</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for facture in factures %}
+        <tr>
+          <td>{{ facture.numero }}</td>
+          <td>{{ facture.description }}</td>
+          <td>{{ facture.montant }}</td>
+          <td>{{ facture.client.nom }}</td>
+          <td>{{ facture.categorie.nom }}</td>
+          <td>{{ facture.est_payee|yesno:"Yes,No" }}</td>
+          <td>
+            <a href="{% url 'modifier_facture' facture.id %}">Edit</a>
+            <a href="{% url 'supprimer_facture' facture.id %}">Delete</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="7">No factures found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="{% url 'creer_facture' %}">Create a New Facture</a>
+
+    {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ajouter une Catégorie</title>
+</head>
+<body>
+
+    {% extends 'factures/base.html' %}
+    {% block content %}
+
+    <h2>Ajouter une nouvelle catégorie</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Afficher le formulaire -->
+        <button type="submit">Ajouter Catégorie</button>
+    </form>
+    {% endblock %}
+</body>
+</html>

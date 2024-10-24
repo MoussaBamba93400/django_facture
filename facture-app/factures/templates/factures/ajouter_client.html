@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ajouter un Client</title>
+</head>
+<body>
+    {% extends 'factures/base.html' %}
+
+    {% block content %}
+    <h2>Ajouter un nouveau client</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Afficher le formulaire -->
+        <button type="submit">Ajouter Client</button>
+    </form>
+    {% endblock %}
+</body>
+</html>
